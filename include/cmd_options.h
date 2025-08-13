@@ -1,6 +1,7 @@
 #pragma once
 
 #include <boost/program_options.hpp>
+#include <optional>
 #include <string>
 #include <unordered_map>
 
@@ -19,13 +20,13 @@ public:
 
     void Parse(int argc, char *argv[]);
 
-    COMMAND_TYPE GetCommand() const { return command_; }
+    std::optional<COMMAND_TYPE> GetCommand() const { return command_; }
     std::string GetInputFile() const { return inputFile_; }
     std::string GetOutputFile() const { return outputFile_; }
     std::string GetPassword() const { return password_; }
 
 private:
-    COMMAND_TYPE command_;
+    std::optional<COMMAND_TYPE> command_{std::nullopt};
     const std::unordered_map<std::string_view, COMMAND_TYPE> commandMapping_ = {
         {"encrypt", ProgramOptions::COMMAND_TYPE::ENCRYPT},
         {"decrypt", ProgramOptions::COMMAND_TYPE::DECRYPT},
